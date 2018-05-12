@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
+import requireAuth from './hoc/requireAuthentication';
 import Header from './Header';
 import Resources from './Resources';
 
@@ -9,7 +10,7 @@ class App extends React.Component {
     return (
       <div>
         <Header />
-        <Route path='/resources' component={ Resources } />
+        <Route path='/resources' component={ requireAuth(Resources) } />
       </div>
     );
   }

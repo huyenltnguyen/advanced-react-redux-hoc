@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { authenticate } from '../actions';
+import { connect } from 'react-redux';
 
 const style = {
   display: 'inline-block',
@@ -8,7 +10,9 @@ const style = {
 
 class Header extends React.Component {
   authBtn = () => {
-    return <button>Sign In</button>;
+    return this.props.authenticated
+    ? <button onClick={ () => this.props.authenticate(false) }>Sign Out</button>
+    : <button onClick={ () => this.props.authenticate(true) }>Sign In</button>
   }
 
   render() {
@@ -31,4 +35,10 @@ class Header extends React.Component {
   }
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.authenticated
+  };
+};
+
+export default connect(mapStateToProps, { authenticate })(Header);
